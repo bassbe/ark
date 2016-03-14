@@ -1,0 +1,39 @@
+# Mips Dissassembler
+# Author: Benjamin Bass
+# Date: 28 February 2016
+# Input: 32-bit machine instruction
+# Output: the mips instruction that was given
+
+hex1 =  0x022DA822
+hex2 =  0x8EF30018
+hex3 =  0x12A70004
+hex4 =  0x02689820
+hex5 =  0xAD930018
+hex6 =  0x02697824
+hex7 =  0xAD8FFFF4
+hex8 =  0x018C6020
+hex9 =  0x02A4A825
+hex10 = 0x158FFFF6
+hex11 = 0x8E59FFF0
+
+bbits = bin(0x)
+
+print bbits
+
+
+# opcode = bbits & rbits
+
+# >>> bin(88)
+# '0b1011000'
+# >>> int('0b1011000', 2)
+# 88
+# >>> 
+
+# >>> a=int('01100000', 2)
+# >>> b=int('00100110', 2)
+# >>> bin(a & b)
+# '0b100000'
+# >>> bin(a | b)
+# '0b1100110'
+# >>> bin(a ^ b)
+# '0b1000110'p
