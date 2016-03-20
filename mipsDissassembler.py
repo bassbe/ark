@@ -1,8 +1,8 @@
 # Mips Dissassembler
 # Author: Benjamin Bass
 # Date: 28 February 2016
-# Input: 32-bit machine instruction
-# Output: the mips instruction that was given
+# Input: 32-bit hexf instruction
+# Output: The mips instruction that was given
 
 # ==============================================================================
 # OPCODES
