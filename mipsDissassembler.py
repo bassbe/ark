@@ -45,7 +45,6 @@ functBitmask = 0x0000003F   # 6 0's
 
 offsetBitmask = 0x0000FFFF  # 4 0's
 
-
 # ------------------------------------------------------------------------------
 # Functio that dissassembles the hex mips instructions
 
@@ -135,3 +134,4 @@ for x in range (0, len(hexArray)):
 # add = 0x00A63820
 # lw = 0x8D070004
 # sw = 0xAF77FFFC
+# 

@@ -41,17 +41,50 @@
   "Bitwise &'s the hex-value and bitmask, then shifts right"
   (ash (logand hex-value bitmask) shift))
 
+
+(defconstant largHex #x02697824)
+(defconstant offex #xAD8FFFF4)
+(setq test-offset (logand offex +bitmask-offset+ ))
+(setq understand-hex #x7824)
+(format t "Larg Hex in #x: ~x~% Large Hex in Int:~a~%" test-offset test-offset)
+
+;; For Negative Offset:
+;; bitmask
+;; flip all bits
+;; 
+
+(defun make-neg (x)
+  (- (abs x)))
+
+
+(:bits test-offset)
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(defun :bits (value &optional (size 16))
+  (format t "~v,'0B" size value))
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ;; Use to extract function code
 (defun extract-func (hex-value bitmask)
   "Bitwise &'s the hex-value and bitmask, then shifts right"
   (logand hex-value bitmask))
 
+(defun choose-RI-poison (hex-command)
+  "Chooses R-type or I-Type Instruction"
+  (let (current-opcode
+	(extract-func (hex-command bitmask-opcode)))
+    (if (current-opcode = 0)
+	(decode-r (hex-command))
+	(decode-I (hex-command))))
 
+;;(format t "shift-opcode, in hex, is: ~x" +shift-opcode+)
 ;; determine opcode, s1, s2
 ;; function code and offset in temp variables
 ;; if 0, do R
 ;; else, do I
 
+
+;;;  0x02697824 Large Offset
 
 
 ;; NOTES

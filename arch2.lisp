@@ -1,210 +1,64 @@
-;; ARCHITECTURE PROJECT #2
-;; Benjamin Bass
-;; 14 March 2016
-;; All Life death does end, and each day dies with sleep
+;;; ARCHITECTURE PROJECT #2
+;;; Benjamin Bass
+;;; 14 March 2016
 
 
+;;; Create main memmory array 16x16
+(setq main-memory (make-array 2048))
 
+(defun initialize-main-memory ()
+  ;; Loop through and populate array
+  (dotimes (i (- (array-total-size main-memory) 1)) ; loop through array
+    (setf
+     (aref main-memory i) ;fetch memory location
+     (logand #xFF i) ))) ; bitmask with last letter to extract last hex digit
 
 
+;;; Create cache.
+(setq cache (make-array '(16)))
 
+(defun initialize-cache-array ()
+  (dotimes (i (array-total-size cache) 1)
+    (setq
+     (aref cache i))
+    (make-cacheStruct
+     :valid 0
+     :slot 0
+     :tag 0
+     :value 0)))
 
 
 
 
+(defstruct cacheStruct valid slot tag value )
 
+;;;Print Array
+;;; (dotimes ((i (array-total-size cache-memory) 1)
+;;; 	   (format
+     
 
 
 
 
 
 
+;; (initialize-cache) ; to Zero Everything
+;; (display-cache)
+;; (write-to-cache)
+;; (write-to-memory)
+;; (read-from-memory)
 
 
+;;;; Main Function
+;; (initialize-main-memory)
+;; (initialize-cache)
+;; (prompt-for-instruction)
+;;   stop when told
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;; Assignment Below
-
-;;==============================================================================
-;; OVERVIEW
-You can use any language. Note that any real cache is invisible to software.
-This will be a simulation of the way that a real cache works.
-Your "cache" will be a software structure/class that will contain information
-similar (but on a smaller and more simplified scale) to what would be in a real
-cache. Your "main memory" will be a 2K array. You can make it an array of
-integers or shorts (16-bits), but because it is simulating a byte-addressable
-memory, you won't be putting any value larger than 0xFF (255 decimal or 11111111
-							     binary) in it.
-
-You will provide for these two areas by defining an array for main memory and a
-structure/class/record (or array of these) for the cache. For example:
-
-short Main_mem[2048];
-
-So, in effect, your Main_mem array will be the "pretend" main memory area, your
-cache structure/class which you define will be the "pretend" cache, your program
-will pretend to be the intelligence of the memory sub-system, and requests that
-you type in will be the equivalent of a processor making requests of the memory
-subsystem.
-
-You will implement a direct-mapped, write-back cache. The block size will be 16
-bytes and you'll have 16 slots. Both of these numbers are smaller than a typical
-real cache, but make for a more manageable simulation. You should use a
-structure/class to manage each slot, where the structure consists of the
-appropriate information (e.g., a valid flag, tag, etc.) and you eventually have
-an array of these structures. (I'm not dictating that you MUST implement the
-				   cache in this exact way, but something close
-				   to this use of structures should make the
-				   most sense.)
-
-
-;;==============================================================================
-;; 2) INITIALIZATION
-
-You MUST initialize your main memory (MM) in such a way that you'll be able to
-know whether or not you have the original value or not and also such that you'll
-be able to tell one byte from another. To achieve this, I want you to assign the
-value 0 to MM[0], 1 to MM[1], and so on until 0xFF to MM[0xFF]. 0xFF is the
-biggest value you can put in a byte, so then you should resume putting 0, 1, 2,
-and so on into MM elements x100, x101, and x102 (MM[x100] = 0, MM[x101] = 1,
-and MM[x102] = 2) until you’ve initialized the entire main memory array
-(MM[0x7FF] = 0xFF).
-
-You should also initialize your cache to all zeros so that it will be easy
-(from a debugging and correcting point of view) to see which slots in the cache
-have something in them and which are still empty.
-
-USE HEX FOR ALL ADDRESSES AND VALUES. This is primarily just an issue for
-input/output and an occasional constant. (A variable that has the decimal value
-10 ALSO has the hexadecimal value 0A and the binary value 00001010 -- they are
-all the same number. It's just a matter of whether you input/output it as a
-decimal, hex or binary number.)
-
-Using hex numbers will actually make your life easier. Until you perform a write
-to an address, you will know that a read of address x7AE should get the value
-xAE, a read of the address x422 should get the value x22, and so on. You
-wouldn't be able to immediately know if you had the correct value if you were
-typing in or printing out decimal values. (For example, x7AE is 1966 in decimal
-and xAE is x174 in decimal. It'll be obvious to you that address x7AE must
-contain xAE in it after Main_Mem has been initialized, but there'd be no way of
-telling that address 1966 decimal should have a decimal value of 174.)
-
-Ideally, you can make an input file of the test case listed below and read that
-in, but if you aren't comfortable with that, feel free to again embed the data
-inside the program itself (even though that isn't good programming practice).
-Remember the lessons you learned in project one - you don't have to "convert"
-numbers to hex; just use the appropriate I/O or assignment statements.
-
-;;==============================================================================
-;; BITWISE ANDS
-
-I do NOT want you using the modulo function to extract the appropriate fields
-from the addresses. I want you using bitwise operations and shifts instead since
-they are much closer to what actually happens in hardware. Although you used
-bitwise ANDs and shifts in the first project, I offer the following example in
-C. It is based on a 32-bit address, a 32-byte block size (32 = 2 to the 5th) and
-8K slots (8K = 2 to the 13th). This gives a 5-bit block offset in the least
-significant bits of the address, a 13-bit slot number in the
-next-least-significant bits and a 14-bit tag in the remaining most significant
-bits. You’ll need to adjust the numbers for the specifics of this project, but
-the example combined with your experience in the first project should make it
-clear how to do that.
-
-<example code
-
-;;==============================================================================
-;; SUPPORTED OPERANDS
-
-
-You will need to support three types of requests from the screen once you have
-initialized your "main memory" and "cache" :
-
-Read byte, Write byte, and Display cache.
-
-If a Read is requested, then you should ask what "address" in your "main memory"
-the Read is for. Note that references to a memory location 7ae, for example, are
-not to the physical memory location 7ae in your computer's memory, but rather to
-byte 7ae in your Main_mem array.
-
-You should then simulate a real-life cache by checking to see if that address is
-in your cache. If it is, display the value you found for it in cache AND
-indicate that a cache hit took place. If not, go to your main memory instead,
-bring the entire block into your cache, display the value found AND indicate a
-cache miss. You MUST show whether it was a cache hit or miss and (on reads) what
-value you read out of the cache to receive full credit.
-
-In other words, act like a cache acts. So, for example, the screen could look
-like the following, where the second and fourth lines are typed by the user
-(or provided by an input file or embedded in the program).
-
-(R)ead, (W)rite, or (D)isplay Cache?
-R
-What address would you like read?
-7ae
-At that byte there is the value ae (Cache Hit)
-
-Writes would be very similar, except that the user must also indicate what the
-data to be written is. For example, (lines 2, 4, and 6 are typed by the user)
-
-(R)ead, (W)rite, or (D)isplay Cache?
-W
-What address would you like to write to?
-562
-What data would you like to write at that address?
-2f
-Value 2f has been written to address 562. (Cache Hit)
-
-
-(The previous two examples indicated a cache hit, but if there was a cache miss,
-you'd output "Cache Miss" instead of "Cache Hit" while still showing the value.)
-Note on writes: If a write is to be performed on a block that is not already in
-the cache, you must bring the entire block into the cache, perform the write and
-consider it a cache miss.
-
-Display Cache will display the contents of each slot in the cache. For example,
-if the first few reads were for hex addresses 7A2, 2E, 2F and 3D5, those
-addresses would map to slot numbers A, 2, 2 and D, respectively. (Work out the
-numbers so you see why that is.) So you would display the following:
-
-(R)ead, (W)rite, or (D)isplay Cache?
-D
-
-
-
-
-
+;;TESTER CODE
+;; Print main slots and it's contents to check of initialized properly
+  ;; (dotimes (i (- (array-total-size main-memory) 1))
+  ;;   (format t "Location: ~x has value: ~x~%" i (aref main-memory i)))
