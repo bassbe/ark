@@ -1,0 +1,185 @@
+CL-USER> (prompt-repeat)
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x5
+Cache Miss! Read in value 5
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x6
+Found value 6 at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x7
+Found value 7 at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x14C
+Cache Miss! Read in value 4C
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x14D
+Found value 4D at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x14E
+Found value 4E at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x14F
+Found value 4F at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x150
+Cache Miss! Read in value 50
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x151
+Found value 51 at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x3A6
+Cache Miss! Read in value A6
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x4C3
+Cache Miss! Read in value C3
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+D
+Slot Valid  Tag  Dirty     Data
+ 0     1     0    0        0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+ 1     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 2     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 3     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 4     1     1    0        40  41  42  43  44  45  46  47  48  49  4A  4B  4C  4D  4E  4F
+ 5     1     1    0        50  51  52  53  54  55  56  57  58  59  5A  5B  5C  5D  5E  5F
+ 6     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 7     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 8     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 9     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ A     1     3    0        A0  A1  A2  A3  A4  A5  A6  A7  A8  A9  AA  AB  AC  AD  AE  AF
+ B     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ C     1     4    0        C0  C1  C2  C3  C4  C5  C6  C7  C8  C9  CA  CB  CC  CD  CE  CF
+ D     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ E     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ F     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+W
+What address value would you like?
+#x14C
+What value would you like?
+99
+The value 63 has been written to the address 332 (Cache Hit!)
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+W
+What address value would you like?
+#x63B
+What value would you like?
+7
+Cache Miss! Slot was empty. Value 7 was written to address 1595. Blocks moved in too.
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x582
+Cache Miss! Read in value 82
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+D
+Slot Valid  Tag  Dirty     Data
+ 0     1     0    0        0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+ 1     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 2     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 3     1     6    1        30  31  32  33  34  35  36  37  38  39  3A  3B  3C  3D  3E  3F
+ 4     1     1    0        40  41  42  43  44  45  46  47  48  49  4A  4B  63  4D  4E  4F
+ 5     1     1    0        50  51  52  53  54  55  56  57  58  59  5A  5B  5C  5D  5E  5F
+ 6     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 7     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 8     1     5    0        80  81  82  83  84  85  86  87  88  89  8A  8B  8C  8D  8E  8F
+ 9     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ A     1     3    0        A0  A1  A2  A3  A4  A5  A6  A7  A8  A9  AA  AB  AC  AD  AE  AF
+ B     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ C     1     4    0        C0  C1  C2  C3  C4  C5  C6  C7  C8  C9  CA  CB  CC  CD  CE  CF
+ D     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ E     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ F     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x348
+Cache Miss! Not same tag. Found value 48 at address  840.
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x3F
+Cache Miss! Not same tag. Found value 3F at address  63.
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+D
+Slot Valid  Tag  Dirty     Data
+ 0     1     0    0        0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+ 1     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 2     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 3     1     0    1        30  31  32  33  34  35  36  37  38  39  3A  3B  3C  3D  3E  3F
+ 4     1     3    0        40  41  42  43  44  45  46  47  48  49  4A  4B  4C  4D  4E  4F
+ 5     1     1    0        50  51  52  53  54  55  56  57  58  59  5A  5B  5C  5D  5E  5F
+ 6     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 7     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 8     1     5    0        80  81  82  83  84  85  86  87  88  89  8A  8B  8C  8D  8E  8F
+ 9     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ A     1     3    0        A0  A1  A2  A3  A4  A5  A6  A7  A8  A9  AA  AB  AC  AD  AE  AF
+ B     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ C     1     4    0        C0  C1  C2  C3  C4  C5  C6  C7  C8  C9  CA  CB  CC  CD  CE  CF
+ D     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ E     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ F     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x14B
+Cache Miss! Not same tag. Found value 4B at address  331.
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x14C
+Found value 4C at that address value! Cache Hit!
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x63F
+Cache Miss! Not same tag. Found value 3F at address  1599.
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+R
+What address value would you like?
+#x83
+Cache Miss! Not same tag. Found value 83 at address  131.
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+D
+Slot Valid  Tag  Dirty     Data
+ 0     1     0    0        0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+ 1     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 2     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 3     1     6    1        30  31  32  33  34  35  36  37  38  39  3A  3B  3C  3D  3E  3F
+ 4     1     1    0        40  41  42  43  44  45  46  47  48  49  4A  4B  4C  4D  4E  4F
+ 5     1     1    0        50  51  52  53  54  55  56  57  58  59  5A  5B  5C  5D  5E  5F
+ 6     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 7     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 8     1     0    0        80  81  82  83  84  85  86  87  88  89  8A  8B  8C  8D  8E  8F
+ 9     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ A     1     3    0        A0  A1  A2  A3  A4  A5  A6  A7  A8  A9  AA  AB  AC  AD  AE  AF
+ B     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ C     1     4    0        C0  C1  C2  C3  C4  C5  C6  C7  C8  C9  CA  CB  CC  CD  CE  CF
+ D     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ E     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ F     0     0    0        0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+(R)ead, (W)rite, (D)isplay Cache, (E)xit:
+E
+NIL
+CL-USER> Done!!!
