@@ -41,7 +41,6 @@
   "Bitwise &'s the hex-value and bitmask, then shifts right"
   (ash (logand hex-value bitmask) shift))
 
-
 (defconstant largHex #x02697824)
 (defconstant offex #xAD8FFFF4)
 (setq test-offset (logand offex +bitmask-offset+ ))

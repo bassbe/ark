@@ -1,13 +1,12 @@
 ;;; ARCHITECTURE PROJECT #2
-;;; Benjamin Bass
-;;; 14 March 2016
+;;; Cxcf
 
-;; to run the program, call (prompt-repeat) function in repl.
 
-;;; Create main memmory array 16x16
+;; Create main memmory array 16x16
 (defvar main-memory (make-array 2048))
-;;; Create cache
+;; Create cache
 (defvar cache (make-array '(16)))
+
 
 ;; When structure object is created, will be initialized to
 (defstruct cache-struct
@@ -22,7 +21,7 @@
   (dotimes (i (array-total-size main-memory) ) ; loop through array
     (setf
      (aref main-memory i) ;fetch memory location
-     (logand #xFF i) ))) ; bitmask with last letter to extract last hex digit
+     (logand #xFF i)))) ; bitmask with last letter to extract last hex digit
 
 ;; Fill cache with cache-struct objects
 (defun initialize-cache-array ()
@@ -248,3 +247,16 @@
        do ;;set data slot in cache to memory location. Loop it to all 16
 	 (setf (aref (cache-struct-data (aref cache slot)) j)
 	       (logand #x0FF (aref main-memory i))))))
+
+
+
+(defun main ();; debug later
+
+  (initialize-main-memory); set main mem 0-#x7FF
+  (initialize-cache-array); with cache struct items
+
+  (let ((in (open "~/seacloud/class/arch/ark/project2input.txt"
+		  :if-does-not-exist nil)))
+    (when in
+      (loop for line = (read-line in nil)
+	   while line do (prompt-repeat)))))
