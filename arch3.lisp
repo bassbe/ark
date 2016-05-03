@@ -1,4 +1,4 @@
-o;;;; Class: CSC 472: Computer Architecture
+;;;; Class: CSC 472: Computer Architecture
 ;;;; Project 3: Pipelined Datapath
 
 ;;;; Simulate how a pipelined datapath works. Uses 5 functions, IF, ID, EX, MEM, WB, and 8 structs 
@@ -26,15 +26,18 @@ o;;;; Class: CSC 472: Computer Architecture
 
 ;Index through Instruction Cache array
 (defvar indexer 0)
-
+;; Program Counter
 (defvar PC #x7A004)
+;; Cycle Number (for the print statements)
+(defvar clock-cycle 1)
+
 ;;--------------------------------------------------------------------------------------------------
 ;; DEFINING STRUCTS
 
 ;; IF/ID Write
 (defstruct if-id-write
   (Inst 0); instruction in hexidecimal
-  (IncrPC #x7A004)); program counter
+  (IncrPC 0)); program counter
 
 ;; IF/ID Read
 (defstruct if-id-read
@@ -214,7 +217,9 @@ o;;;; Class: CSC 472: Computer Architecture
   "Fetch instruction and load to WRITE"
   ;; Fetch the next instruction from Instruction Cache &
   ;; put instruction in WRITE version of IF/ID pipeline register
-  (setq ifWrite-Inst (aref instruction-cache indexer))
+  ;; (setf ifWrite-Inst (aref instruction-cache indexer)) ;
+  (setf (if-id-write-Inst ifWrite) (aref instruction-cache indexer))
+  (setf (if-id-write-IncrPC ifWrite) PC)
   (setq indexer (+ indexer 1))); update indexer to next position in cache
   
 (defun ID_stage()
@@ -273,8 +278,8 @@ o;;;; Class: CSC 472: Computer Architecture
 	     (setf (id-ex-write-c-ALUOp idWrite) 10)
 	     (setf (id-ex-write-c-MemRead idWrite) 0)
 	     (setf (id-ex-write-c-MemWrite idWrite) 0)     ;; set an sub's control bits
-	     (setf (id-ex-write-c-MemToReg idWrite) 0)
-	     (setf (id-ex-write-c-RegWrite idWrite) 1)
+	     (setf (id-ex-write-c-MemToReg idWrite) 1)
+	     (setf (id-ex-write-c-RegWrite idWrite) 0)
 	     (setf (id-ex-write-IncrPC idWrite) PC)
 	     (setf (id-ex-write-ReadReg1Value idWrite) (aref Regs src1reg)); fetch reg1 and add
 	     (setf (id-ex-write-ReadReg2Value idWrite) (aref Regs src2reg)); fetch reg2 and add
@@ -313,8 +318,9 @@ o;;;; Class: CSC 472: Computer Architecture
 	     (setf (id-ex-write-SEOffset idWrite) offset)
 	     (setf (id-ex-write-WriteReg20_16 idWrite) src1reg); set value of src1reg
 	     (setf (id-ex-write-WriteReg15_11 idWrite) src2reg); set value of src2reg
-	     (setf (id-ex-write-function idWrite) 0))))); end save bit setters
+	    (setf (id-ex-write-function idWrite) 0))))); end save bit setters
 
+             
 (defun EX_stage()
   "Preform requested instruction, "
   ;; Read out of ID/EX pipeline
@@ -349,7 +355,8 @@ o;;;; Class: CSC 472: Computer Architecture
 		(eq this-MemRead 0)
 		(eq this-MemWrite 0)
 		(eq this-MemToReg 0)
-		(eq this-RegWrite 1)); control bits for add and sub are same. This is a problem
+		(eq this-RegWrite 1))
+		
 		(setf (ex-mem-write-Zero exWrite) #xF) ; set Zero to #xF
 		 (setf (ex-mem-write-ALUResult);; perform subtraction 
 		       (- (id-ex-read-ReadReg1Value idRead) (id-ex-read-ReadReg2Value idRead)))
@@ -382,7 +389,7 @@ o;;;; Class: CSC 472: Computer Architecture
 			     (+
 			      (id-ex-read-SEOffset idRead) (id-ex-read-WriteReg15_11 idRead))))
 		 ;; set SW value
-		 (setf (ex-mem-write-SBValue exWrite) (id-ex-read-WriteReg15_11 idRead))p
+		 (setf (ex-mem-write-SBValue exWrite) (id-ex-read-WriteReg15_11 idRead))
 		 ;; set Write
 		 (setf (ex-mem-write-WriteRegNum exWrite) 0)))))
 
@@ -403,7 +410,7 @@ o;;;; Class: CSC 472: Computer Architecture
 	    (eq this-RegWrite 1));control bits for lb
 	   (setf (mem-wb-write-LBDataValue memWrite);; set LBDataValue to former ALU Result
 		  (ex-mem-read-ALUResult exRead))
-	    (setf (mem-wb-write-WriteRegNum exRead)))))); set Write Reg Num
+	    (setf (mem-wb-write-WriteRegNum memWrite) (ex-mem-read-WriteRegNum exRead)))))); set Write Reg Num
 
 (defun WB_stage ()
   "Write to registers"
@@ -423,46 +430,59 @@ o;;;; Class: CSC 472: Computer Architecture
     (cond ((and;; if LB, then load data to register
 	    (eq this-MemToReg 1)
 	    (eq this-RegWrite 1))
-	   (setf (aref Regs this-WriteRegNum) this-LBDataValue)
-	  (setf (aref Regs this-WriteRegNum) this-ALUResult)))))
+	   (setf (aref Regs this-WriteRegNum) this-LBDataValue))
+	  ((and ;; if Add, then write to register
+	    (eq this-MemToReg 0 )
+	    (eq this-RegWrite 1))
+	   (setf (aref Regs this-WriteRegNum) this-ALUResult))
+	  ((and;; if subtract, write to register
+	    (eq this-MemToReg 1)
+	    (eq this-RegWrite 0)
+	   (setf (aref Regs this-WriteRegNum) this-ALUResult))
+	  ))))
   
-  ;; Write to regs based on info read from READ versio of MEM_WB
+
 
 (defun Print_out_everything ()
   "Prints out 32 Registers and Pipeline Registers"
-
+  
+  (format t "CLOCK CYCLE: ~a~%~%" indexer)
   (loop for i from 0 to 31
-     do(format t "Register ~a has value: ~x~%"
+     do(format t "Register ~a contains: ~x~%"
 	       i
 	       (aref Regs i)))
-
+  (format t "~%")
+  
   ;; IF/ID  Write Pipeline
-  (format t " IF/ID Write Pipeline:----------~% Inst: ~x~% IncrPC: ~x~%"
+  (format t "[IF/ID Write Pipeline]----------------------------------------
+Inst: ~x
+IncrPC: ~x~%~%"
 	  (if-id-read-Inst ifRead)
 	  (if-id-read-IncrPC ifRead))
   
   ;; IF/ID Read Pipeline
-    (format t " IF/ID Pipeline:----------~% Inst: ~x~% IncrPC: ~x~%"
+  (format t "[IF/ID Pipeline]----------------------------------------
+Inst: ~x
+IncrPC: ~x~%~%"
+	 
 	  (if-id-write-Inst ifWrite)
 	  (if-id-write-IncrPC ifWrite))
 
   ;; ID/EX Write Pipeline
-  (format t "ID/EX Write Pipeline:---------~% Control:~% 
-RegDst: ~x~%
-ALUSrc: ~x~%
-ALUOp: ~x~%
-MemRead: ~x~%
-MemWrite: ~x~%
-MemToReg: ~x~%
-RegWrite: ~x~%~%
-
-ID/EX Data:~%
-IncrPC: ~x~%
-ReadReg1Value: ~x~%
-ReadReg2Value: ~x~%
-SEOffset: ~x~%
-WriteReg20_16: ~x~%
-WriteReg15_11: ~x~%
+  (format t "[ID/EX Write Pipeline]----------------------------------------
+RegDst: ~x
+ALUSrc: ~x
+ALUOp: ~x
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x
+IncrPC: ~x
+ReadReg1Value: ~x
+ReadReg2Value: ~x
+SEOffset: ~x
+WriteReg20_16: ~x
+WriteReg15_11: ~x
 Function: ~x~%~%"
 	  (id-ex-write-c-RegDst idWrite)
 	  (id-ex-write-c-ALUSrc idWrite)
@@ -481,22 +501,20 @@ Function: ~x~%~%"
 	  (id-ex-write-function idWrite))
 
     ;; ID/EX Read Pipeline
-  (format t "ID/EX Read Pipeline:---------~% Control:~% 
-RegDst: ~x~%
-ALUSrc: ~x~%
-ALUOp: ~x~%
-MemRead: ~x~%
-MemWrite: ~x~%
-MemToReg: ~x~%
-RegWrite: ~x~%~%
-
-ID/EX Data:~%
-IncrPC: ~x~%
-ReadReg1Value: ~x~%
-ReadReg2Value: ~x~%
-SEOffset: ~x~%
-WriteReg20_16: ~x~%
-WriteReg15_11: ~x~%
+  (format t "[ID/EX Read Pipeline]----------------------------------------
+RegDst: ~x
+ALUSrc: ~x
+ALUOp: ~x
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x~%
+IncrPC: ~x
+ReadReg1Value: ~x
+ReadReg2Value: ~x
+SEOffset: ~x
+WriteReg20_16: ~x
+WriteReg15_11: ~x
 Function: ~x~%~%"
 	  (id-ex-read-c-RegDst idRead)
 	  (id-ex-read-c-ALUSrc idRead)
@@ -515,17 +533,15 @@ Function: ~x~%~%"
 	  (id-ex-read-function idRead))
 
   ;; Ex/Mem Write Pipeline
-  (format t "EX/Mem Pipeline:--------~% Control:~%
-MemRead: ~x~%
-MemWrite: ~x~%
-MemToReg: ~x~%
-RegWrite: ~x~%
-
-Data:~%
-Zero:~x~%
-ALUResult: ~x~%
-SBValue: ~x~%
-WriteRegNum: ~x~% "
+  (format t "[EX/Mem Pipeline]------------------------------------------------
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x
+Zero:~x
+ALUResult: ~x
+SBValue: ~x
+WriteRegNum: ~x~%~%"
 	  (ex-mem-write-c-MemRead exWrite)
 	  (ex-mem-write-c-MemWrite exWrite)
 	  (ex-mem-write-c-MemToReg exWrite)
@@ -538,35 +554,31 @@ WriteRegNum: ~x~% "
 
   ;; EX/MEM Read Pipeline
     ;; Ex/Mem Write Pipeline
-  (format t "EX/Mem Read Pipeline:--------~% Control:~%
-MemRead: ~x~%
-MemWrite: ~x~%
-MemToReg: ~x~%
-RegWrite: ~x~%
-
-Data:~%
-Zero:~x~%
-ALUResult: ~x~%
-SBValue: ~x~%
-WriteRegNum: ~x~% "
+  (format t "[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x
+Zero:~x
+ALUResult: ~x
+SBValue: ~x
+WriteRegNum: ~x~%~%"
 	  (ex-mem-read-c-MemRead exRead)
 	  (ex-mem-read-c-MemWrite exRead)
 	  (ex-mem-read-c-MemToReg exRead)
 	  (ex-mem-read-c-RegWrite exRead)
-
 	  (ex-mem-read-Zero exRead)
 	  (ex-mem-read-ALUResult exRead)
 	  (ex-mem-read-SBValue exRead)
 	  (ex-mem-read-WriteRegNum exRead))
 
   ;; Mem/WB Write Pipeline
-  (format t "MEM/WB Write Pipeline:-------~% Control:~%
-MemToReg: ~x~%
-RegWrite: ~x~%
-
-LBDataValue: ~x~%
-ALUResult: ~x~%
-WriteRegNum: ~x~%"
+  (format t "[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: ~x
+RegWrite: ~x
+LBDataValue: ~x
+ALUResult: ~x
+WriteRegNum: ~x~%~%"
 	  (mem-wb-write-c-MemToReg memWrite)
 	  (mem-wb-write-c-RegWrite memWrite)
 	  (mem-wb-write-LBDataValue memWrite)
@@ -574,23 +586,25 @@ WriteRegNum: ~x~%"
 	  (mem-wb-write-WriteRegNum memWrite))
 
     ;; Mem/WB Read Pipeline
-  (format t "MEM/WB Read Pipeline:-------~% Control:~%
-MemToReg: ~x~%
-RegWrite: ~x~%
-
-LBDataValue: ~x~%
-ALUResult: ~x~%
-WriteRegNum: ~x~%"
+  (format t "[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: ~x
+RegWrite: ~x
+LBDataValue: ~x
+ALUResult: ~x
+WriteRegNum: ~x~%~%"
 	  (mem-wb-read-c-MemToReg memRead)
 	  (mem-wb-read-c-RegWrite memRead)
 	  (mem-wb-read-LBDataValue memRead)
 	  (mem-wb-read-ALUResult memRead)
-	  (mem-wb-read-WriteRegNum memRead)))
+	  (mem-wb-read-WriteRegNum memRead))
+
+  (format t "================================================================================~%"))
 
 
 
 (defun Copy_write_to_read ()
   "Copy WRITE versions of pipeline registers into READ version for next cycle"
+  
   ;; Copy IF/ID Write to Read
   (setf (if-id-read-Inst ifRead); set Inst
 	(if-id-write-Inst ifWrite))
@@ -628,49 +642,56 @@ WriteRegNum: ~x~%"
 	(id-ex-write-function idWrite))
   
   ;; Copy EX/MEM Write to Read
-  (setf (ex-mem-read-c-MemRead idRead)
-	(ex-mem-write-c-MemRead idWrite))
-  (setf (ex-mem-read-c-MemWrite idRead)
-	(ex-mem-write-c-MemWrite idWrite))
-  (setf (ex-mem-read-c-MemToReg idRead)
-	(ex-mem-write-c-MemToReg idWrite))
-  (setf (ex-mem-read-c-RegWrite idRead)
-	(ex-mem-write-c-RegWrite idWrite))
-  (setf (ex-mem-read-Zero idRead)
-	(ex-mem-write-Zero idWrite))
-  (setf (ex-mem-read-ALUResult idRead)
-	(ex-mem-write-ALUResult idWrite))
-  (setf (ex-mem-read-SBValue idRead)
-	(ex-mem-write-SBValue idWrite))
-  (setf (ex-mem-read-WriteRegNum idRead)
-	(ex-mem-write-WriteRegNum idWrite))
+  (setf (ex-mem-read-c-MemRead exRead)
+	(ex-mem-write-c-MemRead exWrite))
+  (setf (ex-mem-read-c-MemWrite exRead)
+	(ex-mem-write-c-MemWrite exWrite))
+  (setf (ex-mem-read-c-MemToReg exRead)
+	(ex-mem-write-c-MemToReg exWrite))
+  (setf (ex-mem-read-c-RegWrite exRead)
+	(ex-mem-write-c-RegWrite exWrite))
+  (setf (ex-mem-read-Zero exRead)
+	(ex-mem-write-Zero exWrite))
+  (setf (ex-mem-read-ALUResult exRead)
+	(ex-mem-write-ALUResult exWrite))
+  (setf (ex-mem-read-SBValue exRead)
+	(ex-mem-write-SBValue exWrite))
+  (setf (ex-mem-read-WriteRegNum exRead)
+	(ex-mem-write-WriteRegNum exWrite))
   
   ;; Copy MEM/WB Write to Read
-  (setf (mem-wb-read-c-MemToReg idRead)
-	(mem-wb-write-c-MemToReg idWrite))
-  (setf (mem-wb-read-c-RegWrite idRead)
-	(mem-wb-write-c-RegWrite idWrite))
-  (setf (mem-wb-read-LBDataValue idRead)
-	(mem-wb-write-LBDataValue idWrite))
-  (setf (mem-wb-read-ALUResult idRead)
-	(mem-wb-write-ALUResult idWrite))
-  (setf (mem-wb-read-WriteRegNum idRead)
-	(mem-wb-write-WriteRegNum idWrite))
-
-  ;; Increment PC Counter
-  (setq PC (+ PC 4)))
+  (setf (mem-wb-read-c-MemToReg memRead)
+	(mem-wb-write-c-MemToReg memWrite))
+  (setf (mem-wb-read-c-RegWrite memRead)
+	(mem-wb-write-c-RegWrite memWrite))
+  (setf (mem-wb-read-LBDataValue memRead)
+	(mem-wb-write-LBDataValue memWrite))
+  (setf (mem-wb-read-ALUResult memRead)
+	(mem-wb-write-ALUResult memWrite))
+  (setf (mem-wb-read-WriteRegNum memRead)
+	(mem-wb-write-WriteRegNum memWrite)))
 
 ;;--------------------------------------------------------------------------------------------------
 (defun main-loop ()
   "Main loop that acts as clock cycle"
-  (IF_stage)
-  (ID_stage)
-  (EX_stage)
-  (MEM_stage)
-  (WB_stage)
-  (Print_out_everything)
-  (Copy_write_to_read)
-  )
+
+  (setq indexer 0)
+  (setq PC #x7A004)
+  (initialize-regs)
+  (initialize-main_mem)
+  (format t "================================================================================~%")
+  ;; Loop
+  (loop for i from 0 to 11
+    do (IF_stage)
+       (ID_stage)
+       (EX_stage)
+       (MEM_stage)
+       (WB_stage)
+       (Print_out_everything)
+       (Copy_write_to_read)
+     ;; add function to incremenet program counter
+       (incf PC 4)))
+  
 
 ;; (main) ;this calls the main mehtod
 ;;--------------------------------------------------------------------------------------------------

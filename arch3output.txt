@@ -1,177 +1,1342 @@
+Benjamin Bass
+CS 472: Computer Architecture
+Project 3: Output
+
+Note: I had some issues with saving to registers. The bugs are in my EX/MEM stage I believe. When I would try to debug it, it inhibited output.
+
 CL-USER> (main-loop)
-Register 0 has value: 100
-Register 1 has value: 101
-Register 2 has value: 102
-Register 3 has value: 103
-Register 4 has value: 104
-Register 5 has value: 105
-Register 6 has value: 106
-Register 7 has value: 107
-Register 8 has value: 108
-Register 9 has value: 109
-Register 10 has value: 10A
-Register 11 has value: 10B
-Register 12 has value: 10C
-Register 13 has value: 10D
-Register 14 has value: 10E
-Register 15 has value: 10F
-Register 16 has value: 110
-Register 17 has value: 111
-Register 18 has value: 112
-Register 19 has value: 113
-Register 20 has value: 114
-Register 21 has value: 115
-Register 22 has value: 116
-Register 23 has value: 117
-Register 24 has value: 118
-Register 25 has value: 119
-Register 26 has value: 11A
-Register 27 has value: 11B
-Register 28 has value: 11C
-Register 29 has value: 11D
-Register 30 has value: 11E
-Register 31 has value: 11F
- IF/ID Write Pipeline:----------
- Inst: 0
- IncrPC: 7A004
- IF/ID Pipeline:----------
- Inst: 0
- IncrPC: 7A004
-ID/EX Write Pipeline:---------
- Control:
- 
-RegDst: 0
+================================================================================
+CLOCK CYCLE: 1
 
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A030
+
+[IF/ID Pipeline]----------------------------------------
+Inst: A1020000
+IncrPC: 7A004
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
 ALUSrc: 0
-
-ALUOp: 0
-
+ALUOp: A
 MemRead: 0
-
 MemWrite: 0
-
-MemToReg: 0
-
+MemToReg: 1
 RegWrite: 0
-
-
-
-ID/EX Data:
-
-IncrPC: 0
-
-ReadReg1Value: 0
-
-ReadReg2Value: 0
-
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
 SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
 
-WriteReg20_16: 0
-
-WriteReg15_11: 0
-
-Function: 0
-
-ID/EX Read Pipeline:---------
- Control:
- 
-RegDst: 0
-
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
 ALUSrc: 0
-
-ALUOp: 0
-
+ALUOp: A
 MemRead: 0
-
 MemWrite: 0
-
-MemToReg: 0
-
+MemToReg: 1
 RegWrite: 0
 
-
-
-ID/EX Data:
-
-IncrPC: 0
-
-ReadReg1Value: 0
-
-ReadReg2Value: 0
-
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
 SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
 
-WriteReg20_16: 0
-
-WriteReg15_11: 0
-
-Function: 0
-
-EX/Mem Pipeline:--------
- Control:
-
+[EX/Mem Pipeline]------------------------------------------------
 MemRead: 0
-
 MemWrite: 0
-
-MemToReg: 0
-
+MemToReg: 1
 RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
 
-
-Data:
-
-Zero:0
-
-ALUResult: 0
-
-SBValue: 0
-
-WriteRegNum: 0
- EX/Mem Read Pipeline:--------
- Control:
-
+[EX/Mem Read Pipeline]----------------------------------------------
 MemRead: 0
-
 MemWrite: 0
-
-MemToReg: 0
-
+MemToReg: 1
 RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
 
-
-Data:
-
-Zero:0
-
-ALUResult: 0
-
-SBValue: 0
-
-WriteRegNum: 0
- MEM/WB Write Pipeline:-------
- Control:
-
-MemToReg: 0
-
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
 RegWrite: 0
-
-
 LBDataValue: 0
-
 ALUResult: 0
-
 WriteRegNum: 0
-MEM/WB Read Pipeline:-------
- Control:
 
-MemToReg: 0
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
 
+================================================================================
+CLOCK CYCLE: 2
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: A1020000
+IncrPC: 7A004
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 810AFFFC
+IncrPC: 7A008
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
 RegWrite: 0
 
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
 
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
 LBDataValue: 0
-
 ALUResult: 0
-
 WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 3
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 810AFFFC
+IncrPC: 7A008
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 831820
+IncrPC: 7A00C
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 4
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 831820
+IncrPC: 7A00C
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 1263820
+IncrPC: 7A010
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+IncrPC: 7A010
+ReadReg1Value: 104
+ReadReg2Value: 103
+SEOffset: 0
+WriteReg20_16: 4
+WriteReg15_11: 3
+Function: 14
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 5
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 1263820
+IncrPC: 7A010
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 1224820
+IncrPC: 7A014
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+IncrPC: 7A014
+ReadReg1Value: 109
+ReadReg2Value: 106
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 6
+Function: 14
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+
+IncrPC: 7A010
+ReadReg1Value: 104
+ReadReg2Value: 103
+SEOffset: 0
+WriteReg20_16: 4
+WriteReg15_11: 3
+Function: 14
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 6
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 1224820
+IncrPC: 7A014
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 81180000
+IncrPC: 7A018
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+IncrPC: 7A018
+ReadReg1Value: 109
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 2
+Function: 14
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+
+IncrPC: 7A014
+ReadReg1Value: 109
+ReadReg2Value: 106
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 6
+Function: 14
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 7
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 81180000
+IncrPC: 7A018
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 81510010
+IncrPC: 7A01C
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+IncrPC: 7A018
+ReadReg1Value: 109
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 2
+Function: 14
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+
+IncrPC: 7A018
+ReadReg1Value: 109
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 2
+Function: 14
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 8
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 81510010
+IncrPC: 7A01C
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 624022
+IncrPC: 7A020
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+IncrPC: 7A018
+ReadReg1Value: 109
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 2
+Function: 14
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+
+IncrPC: 7A018
+ReadReg1Value: 109
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 2
+Function: 14
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 9
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 624022
+IncrPC: 7A020
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A024
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+
+IncrPC: 7A018
+ReadReg1Value: 109
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 9
+WriteReg15_11: 2
+Function: 14
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 10
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A024
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A028
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 0
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 11
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A028
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A02C
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 0
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+CLOCK CYCLE: 12
+
+Register 0 contains: 0
+Register 1 contains: 101
+Register 2 contains: 102
+Register 3 contains: 103
+Register 4 contains: 104
+Register 5 contains: 105
+Register 6 contains: 106
+Register 7 contains: 107
+Register 8 contains: 108
+Register 9 contains: 109
+Register 10 contains: 10A
+Register 11 contains: 10B
+Register 12 contains: 10C
+Register 13 contains: 10D
+Register 14 contains: 10E
+Register 15 contains: 10F
+Register 16 contains: 110
+Register 17 contains: 111
+Register 18 contains: 112
+Register 19 contains: 113
+Register 20 contains: 114
+Register 21 contains: 115
+Register 22 contains: 116
+Register 23 contains: 117
+Register 24 contains: 118
+Register 25 contains: 119
+Register 26 contains: 11A
+Register 27 contains: 11B
+Register 28 contains: 11C
+Register 29 contains: 11D
+Register 30 contains: 11E
+Register 31 contains: 11F
+
+[IF/ID Write Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A02C
+
+[IF/ID Pipeline]----------------------------------------
+Inst: 0
+IncrPC: 7A030
+
+[ID/EX Write Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[ID/EX Read Pipeline]----------------------------------------
+RegDst: 1
+ALUSrc: 0
+ALUOp: A
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+
+IncrPC: 7A024
+ReadReg1Value: 103
+ReadReg2Value: 102
+SEOffset: 0
+WriteReg20_16: 3
+WriteReg15_11: 2
+Function: 2
+
+[EX/Mem Pipeline]------------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: 0
+MemWrite: 0
+MemToReg: 1
+RegWrite: 0
+Zero:F
+ALUResult: 205
+SBValue: 2
+WriteRegNum: 3
+
+[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: 1
+RegWrite: 0
+LBDataValue: 0
+ALUResult: 0
+WriteRegNum: 0
+
+================================================================================
+NIL
+CL-USER> 
