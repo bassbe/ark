@@ -1,7 +1,5 @@
-;; Project 1 Adapted to Lisp
-;; Mips Dissassembler
-;; Computer Architecture, 2016
-;; Benjamin Bass
+;;;; Class: CSC 472: Computer Architecture
+;;;; Project 1: Mips Dissassembler
 
 
 ;;------------------------------------------------------------------------------
@@ -41,17 +39,8 @@
   "Bitwise &'s the hex-value and bitmask, then shifts right"
   (ash (logand hex-value bitmask) shift))
 
-(defconstant largHex #x02697824)
-(defconstant offex #xAD8FFFF4)
-(setq test-offset (logand offex +bitmask-offset+ ))
-(setq understand-hex #x7824)
-(format t "Larg Hex in #x: ~x~% Large Hex in Int:~a~%" test-offset test-offset)
-
 (defun make-neg (x)
   (- (abs x)))
-
-
-(:bits test-offset)
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 (defun :bits (value &optional (size 16))
@@ -77,9 +66,7 @@
 ;; if 0, do R
 ;; else, do I
 
-
 ;;;  0x02697824 Large Offset
-
 
 ;; NOTES
 ;;------------------------------------------------------------------------------

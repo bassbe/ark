@@ -23,9 +23,11 @@ OP_OR = 0b100101
 pc_counter = 0x7A060
 
 #ARRAY
-hexArray=[0x022DA822, 0x8EF30018, 0x12A70004, 0x02689820, 0xAD930018,
-          0x02697824, 0xAD8FFFF4, 0x018C6020, 0x02A4A825, 0x158FFFF6,
-          0x8E59FFF0]
+# hexArray=[0x022DA822, 0x8EF30018, 0x12A70004, 0x02689820, 0xAD930018,
+#           0x02697824, 0xAD8FFFF4, 0x018C6020, 0x02A4A825, 0x158FFFF6,
+#           0x8E59FFF0]
+
+hexArray = [0xa1020000, 0x810AFFFC, 0x00831820, 0x01263820, 0x01224820, 0x81180000, 0x81510010, 0x00624022, 0x00000000, 0x00000000, 0x00000000, 0x00000000]
 
 #VARIABLES
 opcodeBitmask = 0xFC000000  # 6 0's
@@ -46,7 +48,7 @@ functBitmask = 0x0000003F   # 6 0's
 offsetBitmask = 0x0000FFFF  # 4 0's
 
 # ------------------------------------------------------------------------------
-# Functio that dissassembles the hex mips instructions
+# Function that dissassembles the hex mips instructions
 
 def deMips(hexNum):
 
@@ -89,7 +91,7 @@ def deMips(hexNum):
 
         # Determine offset and opcode
         offset = (hexNum & offsetBitmask)
-
+        
         # switch statement that waterfalls to figure out opcode
         if (opcode == OP_SLT):
             function = "slt"
@@ -125,7 +127,7 @@ for x in range (0, len(hexArray)):
 # |-----------------+-------------|
 # | Instruction     | Hexidecimal |
 # |-----------------+-------------|
-# | add $7, $5, $6  | 0x00A63820  |
+# | add $7, $5, $6  |  0x00A63820 |
 # | lw $7, 4($8)    | 0x8D070004  |
 # | sw $23, -4($27) | 0xAF77FFFC  |
 # |-----------------+-------------|

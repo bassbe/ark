@@ -1,0 +1,177 @@
+CL-USER> (main-loop)
+Register 0 has value: 100
+Register 1 has value: 101
+Register 2 has value: 102
+Register 3 has value: 103
+Register 4 has value: 104
+Register 5 has value: 105
+Register 6 has value: 106
+Register 7 has value: 107
+Register 8 has value: 108
+Register 9 has value: 109
+Register 10 has value: 10A
+Register 11 has value: 10B
+Register 12 has value: 10C
+Register 13 has value: 10D
+Register 14 has value: 10E
+Register 15 has value: 10F
+Register 16 has value: 110
+Register 17 has value: 111
+Register 18 has value: 112
+Register 19 has value: 113
+Register 20 has value: 114
+Register 21 has value: 115
+Register 22 has value: 116
+Register 23 has value: 117
+Register 24 has value: 118
+Register 25 has value: 119
+Register 26 has value: 11A
+Register 27 has value: 11B
+Register 28 has value: 11C
+Register 29 has value: 11D
+Register 30 has value: 11E
+Register 31 has value: 11F
+ IF/ID Write Pipeline:----------
+ Inst: 0
+ IncrPC: 7A004
+ IF/ID Pipeline:----------
+ Inst: 0
+ IncrPC: 7A004
+ID/EX Write Pipeline:---------
+ Control:
+ 
+RegDst: 0
+
+ALUSrc: 0
+
+ALUOp: 0
+
+MemRead: 0
+
+MemWrite: 0
+
+MemToReg: 0
+
+RegWrite: 0
+
+
+
+ID/EX Data:
+
+IncrPC: 0
+
+ReadReg1Value: 0
+
+ReadReg2Value: 0
+
+SEOffset: 0
+
+WriteReg20_16: 0
+
+WriteReg15_11: 0
+
+Function: 0
+
+ID/EX Read Pipeline:---------
+ Control:
+ 
+RegDst: 0
+
+ALUSrc: 0
+
+ALUOp: 0
+
+MemRead: 0
+
+MemWrite: 0
+
+MemToReg: 0
+
+RegWrite: 0
+
+
+
+ID/EX Data:
+
+IncrPC: 0
+
+ReadReg1Value: 0
+
+ReadReg2Value: 0
+
+SEOffset: 0
+
+WriteReg20_16: 0
+
+WriteReg15_11: 0
+
+Function: 0
+
+EX/Mem Pipeline:--------
+ Control:
+
+MemRead: 0
+
+MemWrite: 0
+
+MemToReg: 0
+
+RegWrite: 0
+
+
+Data:
+
+Zero:0
+
+ALUResult: 0
+
+SBValue: 0
+
+WriteRegNum: 0
+ EX/Mem Read Pipeline:--------
+ Control:
+
+MemRead: 0
+
+MemWrite: 0
+
+MemToReg: 0
+
+RegWrite: 0
+
+
+Data:
+
+Zero:0
+
+ALUResult: 0
+
+SBValue: 0
+
+WriteRegNum: 0
+ MEM/WB Write Pipeline:-------
+ Control:
+
+MemToReg: 0
+
+RegWrite: 0
+
+
+LBDataValue: 0
+
+ALUResult: 0
+
+WriteRegNum: 0
+MEM/WB Read Pipeline:-------
+ Control:
+
+MemToReg: 0
+
+RegWrite: 0
+
+
+LBDataValue: 0
+
+ALUResult: 0
+
+WriteRegNum: 0

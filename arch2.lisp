@@ -25,8 +25,8 @@
 
 ;; Fill cache with cache-struct objects
 (defun initialize-cache-array ()
-  (let ((n 0))
-    (loop
+o  (let ((n 0))
+    (loopo
        (when (>= n 16) (return))
        (setf ;sets variable
 	(aref cache n); reference n position in cache
@@ -130,7 +130,7 @@
     (setq data-tag (get-tag data))
     (setq valid (get-valid slot))
     (setq tag-from-data (ash (logand data tag-bitmask) -8))
-    (cond ((and (= valid 1) (= data-tag found-tag))
+    (condo ((and (= valid 1) (= data-tag found-tag))
 	   (setq found-value (aref (cache-struct-data (aref cache slot)) offset))
 	    (format t "Found value ~x at that address value! Cache Hit!~%" found-value));
 	  ((= valid 0)
