@@ -26,7 +26,7 @@
 ;; Fill cache with cache-struct objects
 (defun initialize-cache-array ()
 o  (let ((n 0))
-    (loopo
+    (loop
        (when (>= n 16) (return))
        (setf ;sets variable
 	(aref cache n); reference n position in cache
@@ -260,3 +260,4 @@ o  (let ((n 0))
     (when in
       (loop for line = (read-line in nil)
 	   while line do (prompt-repeat)))))
+;; 

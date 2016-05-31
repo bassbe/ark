@@ -1,4 +1,5 @@
 Benjamin Bass
+3 May 2016
 CS 472: Computer Architecture
 Project 3: Output
 

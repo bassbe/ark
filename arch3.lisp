@@ -13,10 +13,10 @@
 ;; Defining Variables
 
 ;; Main Memory
-(defvar Main_Mem (make-array 1024)); 1k array
+(defvar main-mem (make-array 1024)); 1k array
 
 ;; Array of Integers
-(defvar Regs (make-array 32))
+(defvar regs (make-array 32))
 
 (defvar instruction-cache (make-array '(12) :initial-contents
 				      '(#xa1020000 #x810AFFFC #x00831820
@@ -123,7 +123,7 @@
 ;;--------------------------------------------------------------------------------------------------
 ;; INITIALIZE MEMORY AND STRUCT OBJECTS
 
-(defun initialize-Main_Mem()
+(defun initialize-main-mem()
   "Set Main_Mem sots  #x()00 - #x3FF with the 00-FF values"
   (let((arrayMax (- (array-total-size Main_Mem) 1)))
     (loop for i from 0 to arrayMax
@@ -131,7 +131,7 @@
 	  (aref Main_Mem i)
 	  (logand #xFF i)))))
 
-(defun initialize-Regs()
+(defun initialize-regs()
   "Set regs 0-31 with values #x100 + register number"
   (let ((regcount 31))
     (loop for i from 0 to regcount
@@ -140,36 +140,36 @@
 	  (+ #x100 i)))))
 
 ;; Tester for Main_Mem
-(defun Main_Mem-array-display ()
+(defun main-mem-array-display ()
   (loop for i from 0 to 1023
      do(format t "Spot ~x has value ~x~%"
 	       i
 	       (aref Main_Mem i))))
 
 ;; Tester for 
-(defun Regs-array-display ()
+(defun regs-array-display ()
   (loop for i from 0 to 31
      do(format t "Spot ~a has value ~x~%"
 	       i (aref Regs i))))
 
 ;; Create Pipeline Registers
-(defvar ifWrite (make-if-id-write)); IF/ID Write
-(defvar ifRead (make-if-id-read)); IF/ID Read
-(defvar idWrite (make-id-ex-write)); ID/EX Write
-(defvar idRead (make-id-ex-read)); ID/EX REad
-(defvar exWrite (make-ex-mem-write)); EX/MEM Write
-(defvar exRead (make-ex-mem-read)); EX/MEM Read
-(defvar memWrite (make-mem-wb-write)); MEM/WB Write
-(defvar memRead (make-mem-wb-read)); MEM/WB Reado
+(defvar if-id-write-pipeline (make-if-id-write)); IF/ID Write
+(defvar if-id-read-pipeline (make-if-id-read)); IF/ID Read
+(defvar id-ex-write-pipeline (make-id-ex-write)); ID/EX Write
+(defvar id-ex-read-pipeline (make-id-ex-read)); ID/EX REad
+(defvar ex-mem-write-pipeline (make-ex-mem-write)); EX/MEM Write
+(defvar ex-mem-read-pipeline(make-ex-mem-read)); EX/MEM Read
+(defvar mem-wb-write-pipeline (make-mem-wb-write)); MEM/WB Write
+(defvar mem-wb-read-pipeline (make-mem-wb-read)); MEM/WB Reado
 
 ;;--------------------------------------------------------------------------------------------------
 ;; DECODER FUNCTIONS
-(defun calcOpcode (hexNum)
+(defun calc-opcode (hex-num)
   "Calcualte opcode code"
   (let ((bitmask-opcode #xFC000000); define opcode bitmask
 	(shift-opcode -26); define shiftamt for opcode
 	(opcode 0)); define temp var opcode
-    (setq opcode (ash (logand hexNum bitmask-opcode) shift-opcode)))); bitmask and shift
+    (setq opcode (ash (logand hex-num bitmask-opcode) shift-opcode)))); bitmask and shift
 
 (defun calcSrc1reg (hexNum)
   "Calculate src1reg code"
@@ -213,7 +213,7 @@
 ;;--------------------------------------------------------------------------------------------------
 ;; THE 4 MAIN FUNCTIONS
 
-(defun IF_stage()
+(defun if-stage()
   "Fetch instruction and load to WRITE"
   ;; Fetch the next instruction from Instruction Cache &
   ;; put instruction in WRITE version of IF/ID pipeline register
@@ -222,7 +222,7 @@
   (setf (if-id-write-IncrPC ifWrite) PC)
   (setq indexer (+ indexer 1))); update indexer to next position in cache
   
-(defun ID_stage()
+(defun id-stage()
   "Read and decode instruction. Fetch registers and write values to WRITE ID/EX"
   (let ((hexInst 0)
 	(opcode 0)
@@ -321,7 +321,7 @@
 	    (setf (id-ex-write-function idWrite) 0))))); end save bit setters
 
              
-(defun EX_stage()
+(defun ex-stage()
   "Preform requested instruction, "
   ;; Read out of ID/EX pipeline
           ;ex/mem pipeline         id/ex pipeline
@@ -393,7 +393,7 @@
 		 ;; set Write
 		 (setf (ex-mem-write-WriteRegNum exWrite) 0)))))
 
-(defun MEM_stage()
+(defun mem-stage()
   "If lb, index into Main Memmory and get value, otherwise, pass info from READ Ex_Mem to WRITE
    version of Mem_WB"
   ;; Read in info from ex-mem
@@ -440,10 +440,8 @@
 	    (eq this-RegWrite 0)
 	   (setf (aref Regs this-WriteRegNum) this-ALUResult))
 	  ))))
-  
 
-
-(defun Print_out_everything ()
+(defun print-out-everything ()
   "Prints out 32 Registers and Pipeline Registers"
   
   (format t "CLOCK CYCLE: ~a~%~%" indexer)
@@ -453,150 +451,15 @@
 	       (aref Regs i)))
   (format t "~%")
   
-  ;; IF/ID  Write Pipeline
-  (format t "[IF/ID Write Pipeline]----------------------------------------
-Inst: ~x
-IncrPC: ~x~%~%"
-	  (if-id-read-Inst ifRead)
-	  (if-id-read-IncrPC ifRead))
+
   
-  ;; IF/ID Read Pipeline
-  (format t "[IF/ID Pipeline]----------------------------------------
-Inst: ~x
-IncrPC: ~x~%~%"
-	 
-	  (if-id-write-Inst ifWrite)
-	  (if-id-write-IncrPC ifWrite))
 
-  ;; ID/EX Write Pipeline
-  (format t "[ID/EX Write Pipeline]----------------------------------------
-RegDst: ~x
-ALUSrc: ~x
-ALUOp: ~x
-MemRead: ~x
-MemWrite: ~x
-MemToReg: ~x
-RegWrite: ~x
-IncrPC: ~x
-ReadReg1Value: ~x
-ReadReg2Value: ~x
-SEOffset: ~x
-WriteReg20_16: ~x
-WriteReg15_11: ~x
-Function: ~x~%~%"
-	  (id-ex-write-c-RegDst idWrite)
-	  (id-ex-write-c-ALUSrc idWrite)
-	  (id-ex-write-c-ALUOp idWrite)
-	  (id-ex-write-c-MemRead idWrite)
-	  (id-ex-write-c-MemWrite idWrite)
-	  (id-ex-write-c-MemToReg idWrite)
-	  (id-ex-write-c-RegWrite idWrite)
 
-	  (id-ex-write-IncrPC idWrite)
-	  (id-ex-write-ReadReg1Value idWrite)
-	  (id-ex-write-ReadReg2Value idWrite)
-	  (id-ex-write-SEOffset idWrite)
-	  (id-ex-write-WriteReg20_16 idWrite)
-	  (id-ex-write-WriteReg15_11 idWrite)
-	  (id-ex-write-function idWrite))
+;; print ex-mem-read-pipeline
 
-    ;; ID/EX Read Pipeline
-  (format t "[ID/EX Read Pipeline]----------------------------------------
-RegDst: ~x
-ALUSrc: ~x
-ALUOp: ~x
-MemRead: ~x
-MemWrite: ~x
-MemToReg: ~x
-RegWrite: ~x~%
-IncrPC: ~x
-ReadReg1Value: ~x
-ReadReg2Value: ~x
-SEOffset: ~x
-WriteReg20_16: ~x
-WriteReg15_11: ~x
-Function: ~x~%~%"
-	  (id-ex-read-c-RegDst idRead)
-	  (id-ex-read-c-ALUSrc idRead)
-	  (id-ex-read-c-ALUOp idRead)
-	  (id-ex-read-c-MemRead idRead)
-	  (id-ex-read-c-MemWrite idRead)
-	  (id-ex-read-c-MemToReg idRead)
-	  (id-ex-read-c-RegWrite idRead)
 
-	  (id-ex-read-IncrPC idRead)
-	  (id-ex-read-ReadReg1Value idRead)
-	  (id-ex-read-ReadReg2Value idRead)
-	  (id-ex-read-SEOffset idRead)
-	  (id-ex-read-WriteReg20_16 idRead)
-	  (id-ex-read-WriteReg15_11 idRead)
-	  (id-ex-read-function idRead))
 
-  ;; Ex/Mem Write Pipeline
-  (format t "[EX/Mem Pipeline]------------------------------------------------
-MemRead: ~x
-MemWrite: ~x
-MemToReg: ~x
-RegWrite: ~x
-Zero:~x
-ALUResult: ~x
-SBValue: ~x
-WriteRegNum: ~x~%~%"
-	  (ex-mem-write-c-MemRead exWrite)
-	  (ex-mem-write-c-MemWrite exWrite)
-	  (ex-mem-write-c-MemToReg exWrite)
-	  (ex-mem-write-c-RegWrite exWrite)
 
-	  (ex-mem-write-Zero exWrite)
-	  (ex-mem-write-ALUResult exWrite)
-	  (ex-mem-write-SBValue exWrite)
-	  (ex-mem-write-WriteRegNum exWrite))
-
-  ;; EX/MEM Read Pipeline
-    ;; Ex/Mem Write Pipeline
-  (format t "[EX/Mem Read Pipeline]----------------------------------------------
-MemRead: ~x
-MemWrite: ~x
-MemToReg: ~x
-RegWrite: ~x
-Zero:~x
-ALUResult: ~x
-SBValue: ~x
-WriteRegNum: ~x~%~%"
-	  (ex-mem-read-c-MemRead exRead)
-	  (ex-mem-read-c-MemWrite exRead)
-	  (ex-mem-read-c-MemToReg exRead)
-	  (ex-mem-read-c-RegWrite exRead)
-	  (ex-mem-read-Zero exRead)
-	  (ex-mem-read-ALUResult exRead)
-	  (ex-mem-read-SBValue exRead)
-	  (ex-mem-read-WriteRegNum exRead))
-
-  ;; Mem/WB Write Pipeline
-  (format t "[MEM/WB Write Pipeline]----------------------------------------
-MemToReg: ~x
-RegWrite: ~x
-LBDataValue: ~x
-ALUResult: ~x
-WriteRegNum: ~x~%~%"
-	  (mem-wb-write-c-MemToReg memWrite)
-	  (mem-wb-write-c-RegWrite memWrite)
-	  (mem-wb-write-LBDataValue memWrite)
-	  (mem-wb-write-ALUResult memWrite)
-	  (mem-wb-write-WriteRegNum memWrite))
-
-    ;; Mem/WB Read Pipeline
-  (format t "[MEM/WB Read Pipeline]----------------------------------------
-MemToReg: ~x
-RegWrite: ~x
-LBDataValue: ~x
-ALUResult: ~x
-WriteRegNum: ~x~%~%"
-	  (mem-wb-read-c-MemToReg memRead)
-	  (mem-wb-read-c-RegWrite memRead)
-	  (mem-wb-read-LBDataValue memRead)
-	  (mem-wb-read-ALUResult memRead)
-	  (mem-wb-read-WriteRegNum memRead))
 
   (format t "================================================================================~%"))
 
@@ -680,6 +543,7 @@ WriteRegNum: ~x~%~%"
   (initialize-regs)
   (initialize-main_mem)
   (format t "================================================================================~%")
+
   ;; Loop
   (loop for i from 0 to 11
     do (IF_stage)
@@ -694,6 +558,163 @@ WriteRegNum: ~x~%~%"
   
 
 ;; (main) ;this calls the main mehtod
+
+;;-----------------------------------------------------------------------------------------
+;; Print Functions
+
+(defun print-mem-wb-write-pipeline ()
+  ;; Mem/WB Write Pipeline
+  (format t "[MEM/WB Write Pipeline]----------------------------------------
+MemToReg: ~x
+RegWrite: ~x
+LBDataValue: ~x
+ALUResult: ~x
+WriteRegNum: ~x~%~%"
+	  (mem-wb-write-c-MemToReg memWrite)
+	  (mem-wb-write-c-RegWrite memWrite)
+	  (mem-wb-write-LBDataValue memWrite)
+	  (mem-wb-write-ALUResult memWrite)
+	  (mem-wb-write-WriteRegNum memWrite)))
+
+(defun print-mem-wb-read-pipeline ()
+  ;; Mem/WB Read Pipeline
+  (format t "[MEM/WB Read Pipeline]----------------------------------------
+MemToReg: ~x
+RegWrite: ~x
+LBDataValue: ~x
+ALUResult: ~x
+WriteRegNum: ~x~%~%"
+	  (mem-wb-read-c-MemToReg memRead)
+	  (mem-wb-read-c-RegWrite memRead)
+	  (mem-wb-read-LBDataValue memRead)
+	  (mem-wb-read-ALUResult memRead)
+	  (mem-wb-read-WriteRegNum memRead)))
+
+(defun print-id-ex-write-pipeline ()
+  ;; ID/EX Write Pipeline
+  (format t "[ID/EX Write Pipeline]----------------------------------------
+RegDst: ~x
+ALUSrc: ~x
+ALUOp: ~x
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x
+IncrPC: ~x
+ReadReg1Value: ~x
+ReadReg2Value: ~x
+SEOffset: ~x
+WriteReg20_16: ~x
+WriteReg15_11: ~x
+Function: ~x~%~%"
+	  (id-ex-write-c-RegDst idWrite)
+	  (id-ex-write-c-ALUSrc idWrite)
+	  (id-ex-write-c-ALUOp idWrite)
+	  (id-ex-write-c-MemRead idWrite)
+	  (id-ex-write-c-MemWrite idWrite)
+	  (id-ex-write-c-MemToReg idWrite)
+	  (id-ex-write-c-RegWrite idWrite)
+
+	  (id-ex-write-IncrPC idWrite)
+	  (id-ex-write-ReadReg1Value idWrite)
+	  (id-ex-write-ReadReg2Value idWrite)
+	  (id-ex-write-SEOffset idWrite)
+	  (id-ex-write-WriteReg20_16 idWrite)
+	  (id-ex-write-WriteReg15_11 idWrite)
+	  (id-ex-write-function idWrite)))
+
+(defun print-ex-mem-read-pipeline ()
+  ;; EX/MEM Read Pipeline
+  (format t "[EX/Mem Read Pipeline]----------------------------------------------
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x
+Zero:~x
+ALUResult: ~x
+SBValue: ~x
+WriteRegNum: ~x~%~%"
+	  (ex-mem-read-c-MemRead exRead)
+	  (ex-mem-read-c-MemWrite exRead)
+	  (ex-mem-read-c-MemToReg exRead)
+	  (ex-mem-read-c-RegWrite exRead)
+	  (ex-mem-read-Zero exRead)
+	  (ex-mem-read-ALUResult exRead)
+	  (ex-mem-read-SBValue exRead)
+	  (ex-mem-read-WriteRegNum exRead)))
+
+(defun print-if-id-write-pipeline ()
+      ;; IF/ID  Write Pipeline
+  (format t "[IF/ID Write Pipeline]----------------------------------------
+Inst: ~x
+IncrPC: ~x~%~%"
+	  (if-id-read-Inst ifRead)
+	  (if-id-read-IncrPC ifRead)))
+
+(defun print-if-id-read-pipeline ()
+  ;; IF/ID Read Pipeline
+  (format t "[IF/ID Pipeline]----------------------------------------
+Inst: ~x
+IncrPC: ~x~%~%"
+	 
+	  (if-id-write-Inst ifWrite)
+	  (if-id-write-IncrPC ifWrite)))
+
+(defun print-id-ex-write-pipeline ()
+ 
+    ;; ID/EX Read Pipeline
+  (format t "[ID/EX Read Pipeline]----------------------------------------
+RegDst: ~x
+ALUSrc: ~x
+ALUOp: ~x
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x~%
+IncrPC: ~x
+ReadReg1Value: ~x
+ReadReg2Value: ~x
+SEOffset: ~x
+WriteReg20_16: ~x
+WriteReg15_11: ~x
+Function: ~x~%~%"
+	  (id-ex-read-c-RegDst idRead)
+	  (id-ex-read-c-ALUSrc idRead)
+	  (id-ex-read-c-ALUOp idRead)
+	  (id-ex-read-c-MemRead idRead)
+	  (id-ex-read-c-MemWrite idRead)
+	  (id-ex-read-c-MemToReg idRead)
+	  (id-ex-read-c-RegWrite idRead)
+
+	  (id-ex-read-IncrPC idRead)
+	  (id-ex-read-ReadReg1Value idRead)
+	  (id-ex-read-ReadReg2Value idRead)
+	  (id-ex-read-SEOffset idRead)
+	  (id-ex-read-WriteReg20_16 idRead)
+	  (id-ex-read-WriteReg15_11 idRead)
+	  (id-ex-read-function idRead)))
+
+(defun print-ex-mem-write-pipeline ()
+;; Ex/Mem Write Pipeline
+  (format t "[EX/Mem Pipeline]------------------------------------------------
+MemRead: ~x
+MemWrite: ~x
+MemToReg: ~x
+RegWrite: ~x
+Zero:~x
+ALUResult: ~x
+SBValue: ~x
+WriteRegNum: ~x~%~%"
+	  (ex-mem-write-c-MemRead exWrite)
+	  (ex-mem-write-c-MemWrite exWrite)
+	  (ex-mem-write-c-MemToReg exWrite)
+	  (ex-mem-write-c-RegWrite exWrite)
+
+	  (ex-mem-write-Zero exWrite)
+	  (ex-mem-write-ALUResult exWrite)
+	  (ex-mem-write-SBValue exWrite)
+	  (ex-mem-write-WriteRegNum exWrite)))
+
 ;;--------------------------------------------------------------------------------------------------
 ;; DEBUGGING FUNCTIONS
 
